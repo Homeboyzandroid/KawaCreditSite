@@ -1,18 +1,24 @@
 <?php
 include 'connect.php';
 
+if (@$_POST["submit"] <> "") {
 
-$submission_id = $_POST['submission_id']; 
-$firstname = $_POST['fname'];
-$lastname = $_POST['lname'];
+$first_name = $_POST['firstname'];
+$last_name = $_POST['lastname'];
 $phone = $_POST['phone'];
-$email = $_POST['email'];
-$amout = $_POST['amount'];
+$email_address = $_POST['email'];
+$amount =$_POST['amount'];
 $duration = $_POST['duration'];
-$comment = $_POST['comment'];
-
-$phonenumber = $_POST['phonenumber13'][0] ."-". $_POST['phonenumber13'][1];
-
-$sql = "INSERT INTO users (firstname, lastname, phone,email,amout,duration,comment)
+//$comment = $_POST['comment'];
+ 
+// attempt insert query execution
+$sql = "INSERT INTO users (firstname, lastname, phone,email,amount,duration)
+ VALUES ('$first_name', '$last_name','phone',$email_address','amount','duration')";
+if(mysqli_query($conn,$sql)){
+    echo "Records added successfully.";
+} else{
+    echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+}
+}
 
 ?>
