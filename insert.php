@@ -1,24 +1,34 @@
+
 <?php
-include 'connect.php';
+if(isset($_POST["submit"])){
 
-if (@$_POST["submit"] <> "") {
+$hostname='localhost';
+$username='root';
+$password='';
 
-$first_name = $_POST['firstname'];
-$last_name = $_POST['lastname'];
-$phone = $_POST['phone'];
-$email_address = $_POST['email'];
-$amount =$_POST['amount'];
-$duration = $_POST['duration'];
-//$comment = $_POST['comment'];
- 
-// attempt insert query execution
-$sql = "INSERT INTO users (firstname, lastname, phone,email,amount,duration)
- VALUES ('$first_name', '$last_name','phone',$email_address','amount','duration')";
-if(mysqli_query($conn,$sql)){
-    echo "Records added successfully.";
-} else{
-    echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
-}
+try {
+$dbh = new PDO("mysql:host=$hostname;dbname=kawacredit", $username, $password);
+
+$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // <== add this line
+$sql = "INSERT INTO users (firstname, lastname, phone,amout,duration,comments)
+VALUES ('".$_POST["firstname"]."','".$_POST["lastname"]."','".$_POST["phone"]."',
+		'".$_POST["email"]."','".$_POST["amount"]."','".$_POST["duration"]."')";
+if ($dbh->query($sql)) {
+header("Location: http://localhost/~homeboyz/kawacreditsite/?message=Loan application sent Successfully'");}
+else{
+echo "<script type= 'text/javascript'>alert('Data not successfully Inserted.');</script>";
 }
 
+$dbh = null;
+}
+catch(PDOException $e)
+{
+	
+//echo $e->getMessage();
+}
+
+}
 ?>
+
+
+
