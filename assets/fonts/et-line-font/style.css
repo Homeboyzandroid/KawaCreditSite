@@ -48,7 +48,8 @@ you can use the generic selector below, but it's slower:
 	content: "\e001";
 }
 .icon-desktop:before {
-	content: "\e002";
+	content:"\20ac";
+	/*content: "\e002";*/
 }
 .icon-tablet:before {
 	content: "\e003";
